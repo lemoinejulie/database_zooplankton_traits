@@ -9,7 +9,6 @@ Predator-Prey Size Ratio (µm.µm-1)
 Feeding Mode: The mode by which zooplankton obtain food (e.g., feeding current feeders, active and passive ambush feeders, cruise feeders).
 Assimilation Rate (%C) 
 
-# Data Normalization
 For temperature-sensitive rates, values have been standardized to a reference temperature of 15°C. Additionally, depending on the mass measured experimentally (whether carbon mass or wet mass), the missing mass has been determined based on individual carbon content. The carbon percentages follow the reference values as defined by McConville et al., 2016. If you have any questions or comments, please send a mail at julie.lemoine@imev-mer.fr
 
 This database aims to provide a reliable foundation for ecological modeling, comparative analyses, and physiological studies of zooplankton. We hope it will support further research in aquatic ecosystems and zooplankton ecology.
