@@ -188,7 +188,7 @@ p2
 
 #Carbon mass specific growth rate in function of carbon percentage
 
-carbon_mass_specific_growth = Growth$`growth_15C_corrected_(d-1)` / (Growth$`CW_(en_gC)`^0.39)
+carbon_mass_specific_growth = Growth$`growth_15C_corrected_(d-1)` / (Growth$`CW_(en_gC)`^-0.2)
 
 lm_model2 <- lmodel2(log10(carbon_mass_specific_growth) ~ `carbon_percentage_(McConville)_(en_%)`, data=Growth)
 cor_test_3 <- cor.test(Growth$`carbon_percentage_(McConville)_(en_%)`, log10(carbon_mass_specific_growth), method = "pearson", formula = lm_model2)
@@ -212,7 +212,7 @@ p3
 
 #Wet mass specific growth rate in function of carbon percentage
 
-wet_mass_specific_growth = Growth$`growth_15C_corrected_(d-1)` / (Growth$`WW_(en gC)`^0.33)
+wet_mass_specific_growth = Growth$`growth_15C_corrected_(d-1)` / (Growth$`WW_(en gC)`^-0.15)
 
 lm_model2 <- lmodel2(log10(wet_mass_specific_growth) ~ `carbon_percentage_(McConville)_(en_%)`, data=Growth)
 cor_test_4 <- cor.test(Growth$`carbon_percentage_(McConville)_(en_%)`, log10(wet_mass_specific_growth), method = "pearson", formula = lm_model2)
@@ -309,7 +309,7 @@ p2
 
 #Carbon mass specific respiration rate in function of carbon percentage
 
-carbon_mass_specific_respiration = Respiration$`respiration_15C_corrected_(mmol_O2_d-1)` / (Respiration$`CW_(en_gC)`^0.9)
+carbon_mass_specific_respiration = Respiration$`respiration_15C_corrected_(mmol_O2_d-1)` / (Respiration$`CW_(en_gC)`^0.88)
 
 lm_model2 <- lmodel2(log10(carbon_mass_specific_respiration) ~ `carbon_percentage_(McConville)_(en_%)`, data=Respiration)
 cor_test_3 <- cor.test(Respiration$`carbon_percentage_(McConville)_(en_%)`, log10(carbon_mass_specific_respiration), method = "pearson", formula = lm_model2)
@@ -334,7 +334,7 @@ p3
 
 #Wet mass specific respiration rate in function of carbon percentage
 
-wet_mass_specific_respiration = Respiration$`respiration_15C_corrected_(mmol_O2_d-1)` / (Respiration$`WW_(en gC)`^0.78)
+wet_mass_specific_respiration = Respiration$`respiration_15C_corrected_(mmol_O2_d-1)` / (Respiration$`WW_(en gC)`^0.6)
 
 
 lm_model2 <- lmodel2(log10(wet_mass_specific_respiration) ~ `carbon_percentage_(McConville)_(en_%)`, data=Respiration)
