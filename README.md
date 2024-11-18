@@ -2,11 +2,11 @@
 
 This repository provides a comprehensive database of zooplankton physiological and ecological traits. Each sheet within the Excel file represents a specific physiological or ecological rate, including:
 
-Clearance Rate (L.d-1)
-Respiration Rate (mmol.d-1)
-Growth Rate (d-1)
-Predator-Prey Size Ratio (µm.µm-1)
-Feeding Mode: The mode by which zooplankton obtain food (e.g., feeding current feeders, active and passive ambush feeders, cruise feeders).
+Clearance Rate (L.d-1) /
+Respiration Rate (mmol.d-1) /
+Growth Rate (d-1) /
+Predator-Prey Size Ratio (µm.µm-1) /
+Feeding Mode: The mode by which zooplankton obtain food (e.g., feeding current feeders, active and passive ambush feeders, cruise feeders) /
 Assimilation Rate (%C) 
 
 As indicated in the paper associated with this data base (Lemoine et al., in prep), for temperature-sensitive rates, values have been standardized to a reference temperature of 15°C. Additionally, depending on the mass measured experimentally (whether carbon mass or wet mass), the missing mass has been determined based on individual carbon content. The carbon percentages follow the reference values as defined by McConville et al., 2016. 
