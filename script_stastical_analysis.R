@@ -405,20 +405,20 @@ Predator_prey_size_ratio <- read_excel("data_compilation_merged.xlsx", sheet = "
 
 #Non-specific predators####
 
-ratio_split <- split(Predator_prey_size_ratio$ratio_pred_prey, Predator_prey_size_ratio$mode_feeding_2)
-percent_split <- split(Predator_prey_size_ratio$carbon_percent_Mconville__, Predator_prey_size_ratio$mode_feeding_2)
-group_split <- split(Predator_prey_size_ratio$group, Predator_prey_size_ratio$mode_feeding_2)
-optimal_split <- split(Predator_prey_size_ratio$`Efficency_%`, Predator_prey_size_ratio$mode_feeding_2)
-mean_split <- split(Predator_prey_size_ratio$mean, Predator_prey_size_ratio$mode_feeding_2)
-std_split <- split(Predator_prey_size_ratio$range,Predator_prey_size_ratio$mode_feeding_2)
+ratio_split <- split(Predator_prey_size_ratio$ratio_pred_prey, Predator_prey_size_ratio$mode_feeding)
+percent_split <- split(Predator_prey_size_ratio$carbon_percent_Mconville__, Predator_prey_size_ratio$mode_feeding)
+group_split <- split(Predator_prey_size_ratio$group, Predator_prey_size_ratio$mode_feeding)
+optimal_split <- split(Predator_prey_size_ratio$`Efficency_%`, Predator_prey_size_ratio$mode_feeding)
+mean_split <- split(Predator_prey_size_ratio$mean, Predator_prey_size_ratio$mode_feeding)
+std_split <- split(Predator_prey_size_ratio$range,Predator_prey_size_ratio$mode_feeding)
 
 ##feeding current feeders
-carbon_ff =percent_split[["Filter feeders"]]
-ratio_ff =ratio_split[["Filter feeders"]]
-group_ff  = group_split[["Filter feeders"]]
-optimal_ff = optimal_split[["Filter feeders"]]
-mean_ff = mean_split[["Filter feeders"]]
-std_ff = std_split[["Filter feeders"]]
+carbon_ff =percent_split[["Feeding current feeders"]]
+ratio_ff =ratio_split[["Feeding current feeders"]]
+group_ff  = group_split[["Feeding current feeders"]]
+optimal_ff = optimal_split[["Feeding current feeders"]]
+mean_ff = mean_split[["Feeding current feeders"]]
+std_ff = std_split[["Feeding current feeders"]]
 
 data_split_ff = data.frame(carbon_ff, ratio_ff,group_ff,optimal_ff,mean_ff,std_ff)
 
