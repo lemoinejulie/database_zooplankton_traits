@@ -204,8 +204,6 @@ p3 <- Growth %>%
   scale_shape_manual(values = c(0,1,2,3,4,10,6,7,8,9,5))+
   #scale_color_gradient(low = "#4575b4", high = "#d73027")+
   labs(x="Pourcentage en carbone (McConville et al., 2016)", y="log( croissance spécifique à la masse de carbone \n (en d-1/g^b) )",color ="log( masse en carbone (en g) )", shape = "Groupes fonctionnels" )+
-  annotate("text", x = 10, y = -1.5,
-           label = eq_3, hjust = 0, vjust = 0, size = 3.5, color = "black") +
   theme_linedraw()
 
 p3
@@ -230,7 +228,7 @@ p4 <- Growth %>%
   labs(x="Pourcentage en carbone (McConville et al., 2016)", y="log( croissance spécifique à la masse humide \n (en d-1/g^b) )",color ="log(Poids mouillé (en g)", shape = "Groupes fonctionnels" ) +
   geom_smooth(color="black", method = "lm",level=0.95,se=T,linewidth = 0.5) +
   annotate("text", x = 0, y = 0,
-           label = eq_4, hjust = 0, vjust = 1, size = 3.5, color = "black") +
+           label = eq_4, hjust = -4, vjust = 30, size = 3.5, color = "black") +
   theme_linedraw()
 
 p4
@@ -427,7 +425,7 @@ data_split_ff$optimal_ff <- as.numeric(data_split_ff$optimal_ff)
 data_split_ff$optimal_ff[is.na(data_split_ff$optimal_ff)] <- 0
 
 model_ff <- lm(log10(data_split_ff$ratio_ff) ~ data_split_ff$carbon_ff, weights = data_split_ff$optimal_ff)
-cor.test(data_stat_ff$carbon_ff,log10(data_split_ff$ratio_ff),method = "pearson" )
+cor.test(data_split_ff$carbon_ff,log10(data_split_ff$ratio_ff),method = "pearson" )
 predicted_ff <- predict(model_ff)
 
 
@@ -482,8 +480,53 @@ y_min_ff = interceptmin_ff + slopemin_ff * data_split_ff$carbon_ff
 y_max_ff = interceptmax_ff + slopemax_ff * data_split_ff$carbon_ff
 y_q1_ff = interceptq1_ff + slopeq1_ff * data_split_ff$carbon_ff
 y_q3_ff = interceptq3_ff + slopeq3_ff * data_split_ff$carbon_ff
-y_q1_ff = interceptq1_ff - 0.135 * data_split_ff$carbon_ff
-y_q3_ff = interceptq3_ff - 0.25 * data_split_ff$carbon_ff
+y_q1_ff = interceptq1_ff - 0.13 * data_split_ff$carbon_ff
+y_q3_ff = 4.7 - 0.23 * data_split_ff$carbon_ff
+
+
+## plot
+
+p1 <- ggplot() +
+  geom_line(aes(x = data_split_ff$carbon_ff, y = y_min_ff),color = "#a6bddb",linewidth=0.3)+
+  geom_line(aes(x = data_split_ff$carbon_ff, y = y_max_ff), color = "#a6bddb",linewidth=0.3)+
+  #geom_line(aes(x = data_split_ff$carbon_ff, y = y_q1_ff), color = "#2b8cbe",linewidth=0.3)+
+  #geom_line(aes(x = data_split_ff$carbon_ff, y = y_q3_ff), color = "#2b8cbe",linewidth=0.3)+
+  #geom_ribbon(aes(x = carbon_ff, ymin = y_q1_ff, ymax = y_q3_ff), data = data_split_ff, fill = "#a6bddb", alpha = 0.2)+
+  geom_ribbon(aes(x = carbon_ff, ymin = y_min_ff, ymax = y_max_ff), data = data_split_ff, fill = "#a6bddb", alpha = 0.2)+
+  geom_line(aes(x = data_split_ff$carbon_ff, y = predicted_ff), color = "blue", linetype = "dashed")+
+  geom_point(mapping=aes(x=carbon_ff, y=log10(ratio_ff),shape=group_ff),data = data_split_ff, color ="#619CFF", size=4)+
+  scale_shape_manual(values = c(0,2,3,4,10,9,5))+
+  theme_linedraw()+
+  ylim(-1, 6)+
+  xlim(min(Predator_prey_size_ratio$carbon_percent_Mconville__), max(Predator_prey_size_ratio$carbon_percent_Mconville__))+
+  labs(x="Carbon percentage (CM%WM)", y="Predator prey size ratio (µm.µm-1)", shape = "Groupes fonctionnels")+
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 14), plot.title = element_text(size = 20, face = "bold"),legend.title = element_text(size = 14), legend.text = element_text(size = 12))
+p1
+
+#Specific predators####
+
+#cruise feeders
+
+carbon_cf =percent_split[["Cruise feeders"]]
+ratio_cf =ratio_split[["Cruise feeders"]]
+group_cf  = group_split[["Cruise feeders"]]
+optimal_cf = optimal_split[["Cruise feeders"]]
+mean_cf = mean_split[["Cruise feeders"]]
+std_cf = std_split[["Cruise feeders"]]
+
+#active ambush feeders
+carbon_aa =percent_split[["Active ambush feeders"]]
+ratio_aa =ratio_split[["Active ambush feeders"]]
+group_aa  = group_split[["Active ambush feeders"]]
+optimal_aa = optimal_split[["Active ambush feeders"]]
+mean_aa = mean_split[["Active ambush feeders"]]
+std_aa = std_split[["Active ambush feeders"]]
+
+data_split_cf = data.frame(carbon_cf, ratio_cf,group_cf,optimal_cf,mean_cf,std_cf)
+
+data_split_aa = data.frame(carbon_aa, ratio_aa,group_aa,optimal_aa,mean_aa,std_aa)
+
 
 ##passive ambush feeders
 
@@ -530,64 +573,19 @@ model_maximum_pa <- lm(data_stat_pa$maximum_pa ~ data_stat_pa$carbon_pa)
 cor.test(data_stat_pa$carbon_pa,data_stat_pa$maximum_pa,method = "pearson" )
 
 
-## plot
-
-p1 <- ggplot() +
-  geom_line(aes(x = data_split_ff$carbon_ff, y = y_min_ff),color = "#a6bddb",linewidth=0.3)+
-  geom_line(aes(x = data_split_ff$carbon_ff, y = y_max_ff), color = "#a6bddb",linewidth=0.3)+
-  geom_line(aes(x = data_split_ff$carbon_ff, y = y_q1_ff), color = "#2b8cbe",linewidth=0.3)+
-  geom_line(aes(x = data_split_ff$carbon_ff, y = y_q3_ff), color = "#2b8cbe",linewidth=0.3)+
-  geom_ribbon(aes(x = carbon_ff, ymin = y_q1_ff, ymax = y_q3_ff), data = data_split_ff, fill = "#a6bddb", alpha = 0.2)+
-  geom_ribbon(aes(x = carbon_ff, ymin = y_min_ff, ymax = y_max_ff), data = data_split_ff, fill = "#a6bddb", alpha = 0.2)+
-  geom_line(aes(x = data_split_ff$carbon_ff, y = predicted_ff), color = "blue", linetype = "dashed")+
-  geom_line(aes(x = data_split_pa$carbon_pa, y = predicted_pa), color = "orange", linetype = "dashed")+
-  geom_point(mapping=aes(x=carbon_ff, y=log10(ratio_ff),shape=group_ff),data = data_split_ff, color ="#619CFF", size=4)+
-  geom_point(mapping=aes(x=carbon_pa, y=log10(ratio_pa),shape=group_pa),data = data_split_pa, color ="#fc9272", size=4)+
-  scale_shape_manual(values = c(0,2,3,4,10,6,9,5,0,2,3,5))+
-  theme_linedraw()+
-  ylim(-1, 6)+
-  xlim(min(Predator_prey_size_ratio$carbon_percent_Mconville__), max(Predator_prey_size_ratio$carbon_percent_Mconville__))+
-  labs(x="Carbon percentage (CM%WM)", y="Predator prey size ratio (µm.µm-1)", shape = "Groupes fonctionnels")+
-  ggtitle("Non-specific predators")+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 14), plot.title = element_text(size = 20, face = "bold"),legend.title = element_text(size = 14), legend.text = element_text(size = 12))
-p1
-
-#Specific predators####
-
-#cruise feeders
-
-carbon_cf =percent_split[["Cruise feeders"]]
-ratio_cf =ratio_split[["Cruise feeders"]]
-group_cf  = group_split[["Cruise feeders"]]
-optimal_cf = optimal_split[["Cruise feeders"]]
-mean_cf = mean_split[["Cruise feeders"]]
-std_cf = std_split[["Cruise feeders"]]
-
-#active ambush feeders
-carbon_aa =percent_split[["Active ambush feeders"]]
-ratio_aa =ratio_split[["Active ambush feeders"]]
-group_aa  = group_split[["Active ambush feeders"]]
-optimal_aa = optimal_split[["Active ambush feeders"]]
-mean_aa = mean_split[["Active ambush feeders"]]
-std_aa = std_split[["Active ambush feeders"]]
-
-data_split_cf = data.frame(carbon_cf, ratio_cf,group_cf,optimal_cf,mean_cf,std_cf)
-
-data_split_aa = data.frame(carbon_aa, ratio_aa,group_aa,optimal_aa,mean_aa,std_aa)
-
 
 #plot
 
 p2 <- ggplot() +
   geom_point(mapping=aes(x=carbon_cf, y=log10(ratio_cf),shape=group_cf),data = data_split_cf, color ="#1b9e77", size=4)+
   geom_point(mapping=aes(x=carbon_aa, y=log10(ratio_aa),shape=group_aa),data = data_split_aa, color ="#756bb1", size=4)+
+  geom_point(mapping=aes(x=carbon_pa, y=log10(ratio_pa),shape=group_pa),data = data_split_pa, color ="#fc9272", size=4)+
+  geom_line(aes(x = data_split_pa$carbon_pa, y = predicted_pa), color = "orange", linetype = "dashed")+
   scale_shape_manual(values = c(1,2,4,6,7,1,2))+
   theme_linedraw()+
   ylim(-1, 6)+
   xlim(min(Predator_prey_size_ratio$carbon_percent_Mconville__), max(Predator_prey_size_ratio$carbon_percent_Mconville__))+
   labs(x="Carbon percentage (CM%WM)", y="Predator prey size ratio (µm.µm-1)", shape = "Groupes fonctionnels")+
-  ggtitle("Specific predators")+
   theme(axis.title = element_text(size = 14), axis.text = element_text(size = 14), plot.title = element_text(size = 20, face = "bold"),legend.title = element_text(size = 14),legend.text = element_text(size = 12) )
 
 
